@@ -10,11 +10,11 @@ export const showWarningRequest = (data) => ({
   payload: data
 });
 
-export const continueWarningRequest = (data) => ({
+export const continueWarningRequest = () => ({
   type: Types.CONTINUE_WARNING_REQUEST
 });
 
-export const cancelWarningRequest = (data) => ({
+export const cancelWarningRequest = () => ({
   type: Types.CANCEL_WARNING_REQUEST
 });
 

@@ -8,11 +8,11 @@ const WarningDialog = ({ dispatch, warning }) => {
 
     const handleContinue = () => {
         warning.continue.onClick();
-        dispatch(continueWarningRequest);
+        dispatch(continueWarningRequest());
     }
     const handleCancel = () => {
         warning.cancel.onClick();
-        dispatch(cancelWarningRequest);
+        dispatch(cancelWarningRequest());
     }
 
     return (
@@ -26,8 +26,8 @@ const WarningDialog = ({ dispatch, warning }) => {
                     {warning.content}
                 </DialogContent>
                 <DialogActions>
+                    <Button disabled={warning.cancel.disable} onClick={handleCancel} > {warning.cancel.text || 'Cancel'}</Button>
                     {warning.continue.onClick && <Button disabled={warning.continue.disable} onClick={handleContinue} > {warning.continue.text || 'Continue'}</Button>}
-                    {warning.cancel.onClick && <Button disabled={warning.cancel.disable} onClick={handleCancel} > {warning.cancel.text || 'Cancel'}</Button>}
                 </DialogActions>
             </Dialog>
         </>

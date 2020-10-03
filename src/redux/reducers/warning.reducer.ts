@@ -40,12 +40,12 @@ export function warningReduxReducer(state = initialState, action) {
                 open: true,
                 ...action.payload,
                 continue: {
-                    ...state,
-                    ...action.payoload.continue
+                    ...state.continue,
+                    ...action.payload.continue
                 },
                 cancel: {
-                    ...state,
-                    ...action.payoload.cancel
+                    ...state.cancel,
+                    ...action.payload.cancel
                 }
             };
 
