@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { deleteQuestionRequest, getQuestionsRequest } from '../../redux/actions/questionwebservice';
+import { deleteQuestionRequest, getQuestionsRequest, editQuestionRequest } from '../../redux/actions/questionwebservice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: theme.palette.text.secondary,
       display: 'flex',
-      
+
       justifyContent: 'space-evenly',
     },
     questionDetails: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function QuestionListView({dispatch, questions}) {
+function QuestionListView({ dispatch, questions }) {
 
   const classes = useStyles();
 
@@ -58,16 +58,16 @@ function QuestionListView({dispatch, questions}) {
     dispatch(getQuestionsRequest());
   }
 
-  const deleteQuestion =  (index) => {
-      dispatch(deleteQuestionRequest(index));
+  const deleteQuestion = (index) => {
+    dispatch(deleteQuestionRequest(index));
   }
 
   const editQuestion = (index) => {
-   // TODO
+    dispatch(editQuestionRequest(index))
   }
 
   return (
-    <Grid xs={5}>
+    <Grid item xs={5}>
       <h1>Questions</h1>
       <Button variant="contained" color="primary" onClick={() => getMoreQuestions()}>
         Fetch More Questions
@@ -82,11 +82,11 @@ function QuestionListView({dispatch, questions}) {
                 <Box>{question.difficulty}</Box>
               </Box>
               <Box className={classes.buttons}>
-              <Button variant="contained" color="primary" onClick={() => editQuestion(index)}>
-                Edit
+                <Button variant="contained" color="primary" onClick={() => editQuestion(index)}>
+                  Edit
               </Button>
-              <Button variant="contained" color="primary" onClick={() => deleteQuestion(index)}>
-Delete      </Button>
+                <Button variant="contained" color="primary" onClick={() => deleteQuestion(index)}>
+                  Delete      </Button>
               </Box>
             </Paper>
           </Grid>
