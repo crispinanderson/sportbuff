@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { saveQuestionRequest } from '../../../../redux/actions/questionwebservice';
+import { showWarningRequest } from '../../../../redux/actions/warningservice';
 
 export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
@@ -36,18 +37,35 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
     }, [edit.index])
 
     const handleSave = () => {
-        dispatch(saveQuestionRequest(edit.index, {
-            question,
-            correct_answer: answers.filter((a, i) => correct[i])[0],
-            incorrect_answers: answers.filter((a, i) => !correct[i])
+        dispatch(showWarningRequest({
+            title: 'Save your changes?',
+            text: 'Overwrite and save the changes, this cannot be undone!',
+            continue: {
+                text: 'save',
+                onClick: () => dispatch(saveQuestionRequest(edit.index, {
+                    question,
+                    correct_answer: answers.filter((a, i) => correct[i])[0],
+                    incorrect_answers: answers.filter((a, i) => !correct[i])
+                }))
+            }
         }))
     };
 
     const handleUndo = () => {
-        setQuestion(edit.question)
-        setAnswers(initAnswers())
-        setCorrect(initCorrect())
-        setEdited(false);
+        dispatch(showWarningRequest({
+            title: 'Undo changes?',
+            text: 'Do you really want to undo all the changes!',
+            continue: {
+                text: 'undo',
+                onClick: () => {
+                    setQuestion(edit.question)
+                    setAnswers(initAnswers())
+                    setCorrect(initCorrect())
+                    setEdited(false);
+                }
+            }
+        }))
+
     };
 
     const values = { question, answers, correct, edited };
