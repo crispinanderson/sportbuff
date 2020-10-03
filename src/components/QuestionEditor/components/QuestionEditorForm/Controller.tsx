@@ -20,6 +20,13 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
     const initCorrect = () => [true, ...Array(edit.incorrect_answers.length).fill(false)]
     const [correct, setCorrect] = useState(initCorrect());
     const handleCheckboxes = (i) => {
+
+        /* !! NOTE !! 
+        Checkboxes can only ever have one correct answer 
+        The spec asks for a min. one correct one incorrect answer 
+        but the api probably doesnt support multiple correct answers.
+        since we receive a single correct_answer and an array of incorrect_answers */
+
         setCorrect(correct.map((v, index) => index === i));
         if (!edited) setEdited(true)
     };
@@ -36,20 +43,38 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
         setCorrect(initCorrect())
     }, [edit.index])
 
+    const inputsAreValid = () => {
+        if (answers.filter((a) => a.length).length < answers.length) return false;
+        if (question.split(' ').length < 2) return false
+        return true;
+    }
+
     const handleSave = () => {
-        dispatch(showWarningRequest({
-            title: 'Save your changes?',
-            text: 'Overwrite and save the changes, this cannot be undone!',
-            continue: {
-                text: 'save',
-                onClick: () => dispatch(saveQuestionRequest(edit.index, {
-                    ...edit,
-                    question,
-                    correct_answer: answers.filter((a, i) => correct[i])[0],
-                    incorrect_answers: answers.filter((a, i) => !correct[i])
-                }))
-            }
-        }))
+        if (inputsAreValid()) {
+            dispatch(showWarningRequest({
+                title: 'Save your changes?',
+                text: 'Overwrite and save the changes, this cannot be undone!',
+                continue: {
+                    text: 'save',
+                    onClick: () => dispatch(saveQuestionRequest(edit.index, {
+                        ...edit,
+                        question,
+                        correct_answer: answers.filter((a, i) => correct[i])[0],
+                        incorrect_answers: answers.filter((a, i) => !correct[i])
+                    }))
+                }
+            }))
+        }
+        else {
+            dispatch(showWarningRequest({
+                title: 'There are issues with your edit.',
+                text: 'Please check your question and answers, you cannot have empty answers and your question must be at least 2 words long.',
+                cancel: {
+                    text: 'close'
+                }
+            }))
+        }
+
     };
 
     const handleUndo = () => {
