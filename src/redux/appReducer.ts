@@ -48,7 +48,7 @@ function questionReduxReducer(state = initialQuizState, action) {
       return {
         questions: [
           ...state.questions.slice(0, action.payload.index),
-          ...action.payload.data,
+          action.payload.data,
           ...state.questions.slice(action.payload.index + 1)
         ],
       };
