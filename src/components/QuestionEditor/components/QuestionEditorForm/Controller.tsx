@@ -35,7 +35,6 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
         setCorrect(initCorrect())
     }, [edit.index])
 
-
     const handleSave = () => {
         dispatch(saveQuestionRequest(edit.index, {
             question,
@@ -51,20 +50,8 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
         setEdited(false);
     };
 
-    const values = {
-        question,
-        answers,
-        correct,
-        edited
-    }
-
-    const handlers = {
-        question: handleQuestion,
-        annswer: handleAnswer,
-        correct: handleCheckboxes,
-        save: handleSave,
-        undo: handleUndo
-    }
+    const values = { question, answers, correct, edited };
+    const handlers = { question: handleQuestion, answer: handleAnswer, correct: handleCheckboxes, save: handleSave, undo: handleUndo }
 
     return (<ViewComponent
         values={values}
