@@ -43,6 +43,7 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
             continue: {
                 text: 'save',
                 onClick: () => dispatch(saveQuestionRequest(edit.index, {
+                    ...edit,
                     question,
                     correct_answer: answers.filter((a, i) => correct[i])[0],
                     incorrect_answers: answers.filter((a, i) => !correct[i])
