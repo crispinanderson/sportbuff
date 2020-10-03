@@ -44,7 +44,12 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
         }))
     };
 
-    const handleUndo = () => { };
+    const handleUndo = () => {
+        setQuestion(edit.question)
+        setAnswers(initAnswers())
+        setCorrect(initCorrect())
+        setEdited(false);
+    };
 
     const values = {
         question,
