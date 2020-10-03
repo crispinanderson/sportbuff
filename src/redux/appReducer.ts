@@ -44,6 +44,14 @@ function questionReduxReducer(state = initialQuizState, action) {
           index: action.payload.index
         }
       };
+    case sportwebservice.Types.SAVE_QUESTION_REQUEST:
+      return {
+        questions: [
+          ...state.questions.slice(0, action.payload.index),
+          ...action.payload.data,
+          ...state.questions.slice(action.payload.index + 1)
+        ],
+      };
     default:
       return state;
   }
