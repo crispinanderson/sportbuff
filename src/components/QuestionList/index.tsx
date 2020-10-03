@@ -51,6 +51,7 @@ function QuestionListView({dispatch, questions}) {
   const classes = useStyles();
 
   useEffect(() => {
+    dispatch(getQuestionsRequest());
   }, []);
 
   const getMoreQuestions = () => {
