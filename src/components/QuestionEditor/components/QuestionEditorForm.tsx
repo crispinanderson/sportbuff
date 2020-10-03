@@ -2,8 +2,6 @@ import { Paper, FormLabel, Grid, Checkbox, Button, FormGroup, TextField } from "
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
-/* import { Formik, Form, Field } from 'formik'; */
-/* import { TextField } from 'formik-material-ui'; */
 import { saveQuestionRequest } from '../../../redux/actions/questionwebservice';
 
 interface Values {
@@ -36,7 +34,6 @@ export function QuestionEditorForm(props) {
 
   const { dispatch, edit } = props;
   const classes = useStyles();
-  const handleSubmit = (values) => console.log('submitted', values);
 
   const [edited, setEdited] = useState(false);
 
@@ -59,7 +56,10 @@ export function QuestionEditorForm(props) {
   };
 
   const [question, setQuestion] = useState(edit.question);
-  const handleQuestion = (value) => setQuestion(value);
+  const handleQuestion = ({ target }) => {
+    if (!edited) setEdited(true)
+    setQuestion(target.value)
+  }
 
   useEffect(() => {
     setQuestion(edit.question)
@@ -69,7 +69,11 @@ export function QuestionEditorForm(props) {
 
 
   const handleSave = () => {
-    dispatch(saveQuestionRequest(edit.index, edit))
+    dispatch(saveQuestionRequest(edit.index, {
+      question,
+      correct_answer: answers.filter((a, i) => correct[i])[0],
+      incorrect_answers: answers.filter((a, i) => !correct[i])
+    }))
   };
   const handleUndo = () => { };
 
@@ -85,8 +89,8 @@ export function QuestionEditorForm(props) {
           multiline
           name='question'
           type='text'
-          value={edit.question}
-          onChange={({ target: { value } }) => handleQuestion}
+          value={question}
+          onChange={handleQuestion}
         />
         <Grid container>
           <Grid item xs={10}>
@@ -141,8 +145,7 @@ export function QuestionEditorForm(props) {
               color="primary"
               className={classes.buttons}
               disabled={!edited}
-              /* onClick={handleSave} */
-              type='submit'
+              onClick={handleSave}
             >
               Save
         </Button>
