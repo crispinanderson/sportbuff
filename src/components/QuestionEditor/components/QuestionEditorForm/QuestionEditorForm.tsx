@@ -1,19 +1,10 @@
-import { Paper, FormLabel, Grid, Checkbox, Button, FormGroup, TextField } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { connect } from 'react-redux';
 import { Controller } from "./Controller";
 import { View } from "./View";
 
-
-
-interface Values {
-  question: string
-}
-
-export function QuestionEditorForm(props) {
-
+function QuestionEditorForm(props) {
   return <Controller ViewComponent={View} {...props} />
-
 }
 
 function mapStateToProps(state: any) {

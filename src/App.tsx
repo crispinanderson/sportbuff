@@ -5,10 +5,11 @@ import { store } from './redux/appReducer';
 import { Grid } from '@material-ui/core';
 import QuestionsList from './components/QuestionList'
 import QuestionEditor from './components/QuestionEditor';
+import WarningDialog from './components/WarningDialog/WarningDialog';
 
 
 
-function App() {
+function App(props) {
 
   return (
     <Provider store={store}>
@@ -17,6 +18,7 @@ function App() {
           <QuestionEditor />
           <QuestionsList />
         </Grid>
+        <WarningDialog />
       </div>
 
 
