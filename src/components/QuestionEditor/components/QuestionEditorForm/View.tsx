@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useStyles } from './useStyles';
 import { Paper, FormLabel, Grid, Checkbox, Button, FormGroup, TextField } from "@material-ui/core";
 
@@ -65,7 +65,7 @@ export const View = ({ values, handlers }) => {
                             onClick={handlers.undo}
                         >
                             Undo
-        </Button>
+                    </Button>
                     </Grid>
                     <Grid item xs={2}>
                         <Button
