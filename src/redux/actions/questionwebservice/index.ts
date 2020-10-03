@@ -1,3 +1,4 @@
+import { EditQuestion } from "../../../types/Question";
 
 
 export const Types = {
@@ -10,7 +11,7 @@ export const Types = {
 
 export const getQuestionsRequest = () => ({
   type: Types.GET_QUESTIONS_REQUEST,
-  payload: { }
+  payload: {}
 });
 
 export const getQuestionsSuccess = (data) => ({
@@ -27,4 +28,9 @@ export const deleteQuestionRequest = (index) => ({
   type: Types.DELETE_QUESTION_REQUEST,
   payload: { index: index }
 });
+
+export const editQuestionRequest = (index) => ({
+  type: Types.EDIT_QUESTION_REQUEST,
+  payload: { index: index }
+})
 
