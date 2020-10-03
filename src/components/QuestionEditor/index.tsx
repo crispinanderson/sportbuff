@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React from "react";
 import { connect } from 'react-redux';
-import { QuestionEditorForm } from "./components/QuestionEditorForm";
+import { QuestionEditorForm } from "./components/QuestionEditorForm/QuestionEditorForm";
 
 
 export function QuestionEditor(props) {
