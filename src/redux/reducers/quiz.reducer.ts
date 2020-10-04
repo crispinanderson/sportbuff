@@ -41,6 +41,10 @@ export function questionReduxReducer(state = initialQuizState, action) {
         case sportwebservice.Types.SAVE_QUESTION_REQUEST:
             return {
                 ...state,
+                edit: {
+                    ...state.edit,
+                    edited: false
+                },
                 questions: [
                     ...state.questions.slice(0, action.payload.index),
                     action.payload.data,
