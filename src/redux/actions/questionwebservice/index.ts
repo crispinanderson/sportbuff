@@ -10,8 +10,7 @@ export const Types = {
 };
 
 export const getQuestionsRequest = () => ({
-  type: Types.GET_QUESTIONS_REQUEST,
-  payload: {}
+  type: Types.GET_QUESTIONS_REQUEST
 });
 
 export const getQuestionsSuccess = (data) => ({
