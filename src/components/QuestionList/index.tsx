@@ -5,6 +5,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { deleteQuestionRequest, getQuestionsRequest, editQuestionRequest } from '../../redux/actions/questionwebservice';
+import { showWarningRequest } from '../../redux/actions/warningservice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,7 +60,15 @@ function QuestionListView({ dispatch, questions }) {
   }
 
   const deleteQuestion = (index) => {
-    dispatch(deleteQuestionRequest(index));
+    dispatch(showWarningRequest({
+      title: 'Delete question?',
+      text: 'Are you sure, this cannot be undone!',
+      continue: {
+        text: 'delete',
+        onClick: () => dispatch(deleteQuestionRequest(index))
+      }
+    }))
+
   }
 
   const editQuestion = (index) => {

@@ -6,6 +6,7 @@ export const Types = {
   DELETE_QUESTION_REQUEST: 'DELETE_QUESTION_REQUEST',
   EDIT_QUESTION_REQUEST: 'EDIT_QUESTION_REQUEST',
   SAVE_QUESTION_REQUEST: 'SAVE_QUESTION_REQUEST',
+  SET_QUESTION_EDITED_REQUEST: 'SET_QUESTION_EDITED_REQUEST',
 };
 
 export const getQuestionsRequest = () => ({
@@ -36,5 +37,9 @@ export const editQuestionRequest = (index) => ({
 export const saveQuestionRequest = (index, data) => ({
   type: Types.SAVE_QUESTION_REQUEST,
   payload: { index: index, data: data }
+})
+
+export const setQuestionEditedRequest = () => ({
+  type: Types.SET_QUESTION_EDITED_REQUEST
 })
 

@@ -2,7 +2,7 @@
 import * as warningService from '../actions/warningservice';
 
 interface WarningButtonState {
-    onClick: () => any | null,
+    onClick: null | Function,
     text: string | null,
     disable: boolean | null,
 }
@@ -20,7 +20,7 @@ const initialState: WarningState = {
     title: null,
     text: null,
     continue: {
-        onClick: () => { },
+        onClick: null,
         text: null,
         disable: false
     },
