@@ -1,7 +1,7 @@
 
-import * as sportwebservice from '../actions/questionwebservice';
+import * as sportwebservice from '../../actions/questionwebservice';
 
-import { Question, EditQuestion } from '../../types/Question';
+import { Question, EditQuestion } from '../../../types/Question';
 
 export interface QuizState {
     questions: Question[]
@@ -17,6 +17,7 @@ export function questionReduxReducer(state = initialQuizState, action) {
     switch (action.type) {
         case sportwebservice.Types.GET_QUESTIONS_SUCCESS:
             return {
+                ...state,
                 questions: [
                     ...action.payload.results,
                     ...state.questions
@@ -24,6 +25,7 @@ export function questionReduxReducer(state = initialQuizState, action) {
             };
         case sportwebservice.Types.DELETE_QUESTION_REQUEST:
             return {
+                ...state,
                 questions: [
                     ...state.questions.slice(0, action.payload.index),
                     ...state.questions.slice(action.payload.index + 1)
