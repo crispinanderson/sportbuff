@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { Controller } from "./Controller";
-import { View } from "./View";
+import { Controller } from "./QuestionEditorForm.controller";
+import { View } from "./QuestionEditorForm.view";
 
 function QuestionEditorForm(props) {
   return <Controller ViewComponent={View} {...props} />
