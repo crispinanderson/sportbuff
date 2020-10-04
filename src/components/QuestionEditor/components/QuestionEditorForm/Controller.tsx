@@ -4,8 +4,6 @@ import { showWarningRequest } from '../../../../redux/actions/warningservice';
 
 export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
-    /* const [edited, setEdited] = useState(false); */
-
     const initAnswers = () => [
         edit.correct_answer,
         ...edit.incorrect_answers.map((a) => a)
