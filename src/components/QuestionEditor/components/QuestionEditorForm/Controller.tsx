@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { saveQuestionRequest } from '../../../../redux/actions/questionwebservice';
+import { saveQuestionRequest, setQuestionEditedRequest, editQuestionRequest } from '../../../../redux/actions/questionwebservice';
 import { showWarningRequest } from '../../../../redux/actions/warningservice';
 
 export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
-    const [edited, setEdited] = useState(false);
+    /* const [edited, setEdited] = useState(false); */
 
     const initAnswers = () => [
         edit.correct_answer,
@@ -13,7 +13,7 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
     const [answers, setAnswers] = useState(initAnswers());
     const handleAnswer = (index, value) => {
-        if (!edited) setEdited(true)
+        if (!edit.edited) dispatch(setQuestionEditedRequest())
         setAnswers(answers.map((answer, i) => i === index ? value : answer))
     }
 
@@ -28,19 +28,34 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
         since we receive a single correct_answer and an array of incorrect_answers */
 
         setCorrect(correct.map((v, index) => index === i));
-        if (!edited) setEdited(true)
+        if (!edit.edited) dispatch(setQuestionEditedRequest())
     };
 
     const [question, setQuestion] = useState(edit.question);
     const handleQuestion = ({ target }) => {
-        if (!edited) setEdited(true)
+        if (!edit.edited) dispatch(setQuestionEditedRequest())
         setQuestion(target.value)
     }
 
-    useEffect(() => {
+    const resetEditor = () => {
         setQuestion(edit.question)
         setAnswers(initAnswers())
         setCorrect(initCorrect())
+    }
+
+    useEffect(() => {
+        if (edit.edited) {
+            dispatch(showWarningRequest({
+                title: 'You have unsaved changes?',
+                text: 'Do you want to load this booking, you will loose your changes',
+                continue: {
+                    onClick: resetEditor
+                }
+            }))
+        }
+        else {
+            resetEditor()
+        }
     }, [edit.index])
 
     const inputsAreValid = () => {
@@ -56,12 +71,14 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
                 text: 'Overwrite and save the changes, this cannot be undone!',
                 continue: {
                     text: 'save',
-                    onClick: () => dispatch(saveQuestionRequest(edit.index, {
-                        ...edit,
-                        question,
-                        correct_answer: answers.filter((a, i) => correct[i])[0],
-                        incorrect_answers: answers.filter((a, i) => !correct[i])
-                    }))
+                    onClick: () => {
+                        dispatch(saveQuestionRequest(edit.index, {
+                            ...edit,
+                            question,
+                            correct_answer: answers.filter((a, i) => correct[i])[0],
+                            incorrect_answers: answers.filter((a, i) => !correct[i])
+                        }))
+                    }
                 }
             }))
         }
@@ -84,17 +101,15 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
             continue: {
                 text: 'undo',
                 onClick: () => {
-                    setQuestion(edit.question)
-                    setAnswers(initAnswers())
-                    setCorrect(initCorrect())
-                    setEdited(false);
+                    dispatch(editQuestionRequest(edit.index))
+                    resetEditor();
                 }
             }
         }))
 
     };
 
-    const values = { question, answers, correct, edited };
+    const values = { question, answers, correct, edited: edit.edited };
     const handlers = { question: handleQuestion, answer: handleAnswer, correct: handleCheckboxes, save: handleSave, undo: handleUndo }
 
     return (<ViewComponent

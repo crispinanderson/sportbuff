@@ -47,6 +47,14 @@ export function questionReduxReducer(state = initialQuizState, action) {
                     ...state.questions.slice(action.payload.index + 1)
                 ],
             };
+        case sportwebservice.Types.SET_QUESTION_EDITED_REQUEST:
+            return {
+                ...state,
+                edit: {
+                    ...state.edit,
+                    edited: true
+                },
+            };
         default:
             return state;
     }
