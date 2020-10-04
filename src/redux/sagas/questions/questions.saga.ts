@@ -4,7 +4,7 @@ import {
 import * as actions from '../../actions/questionwebservice';
 import * as sportsapi from '../../../api/sportsapi';
 
-function* getQuestions() {
+export function* getQuestions() {
   try {
     const result = yield call(sportsapi.getQuestions);
 
