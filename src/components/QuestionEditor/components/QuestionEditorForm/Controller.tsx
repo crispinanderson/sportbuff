@@ -110,8 +110,30 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
     };
 
-    const values = { question, answers, correct, edited: edit.edited };
-    const handlers = { question: handleQuestion, answer: handleAnswer, correct: handleCheckboxes, save: handleSave, undo: handleUndo }
+    const showAddAnswer = answers.length < 5;
+    const handleAddAnswer = () => {
+        setAnswers([...answers, ''])
+        setCorrect([...correct, false])
+    }
+
+    const disableDelete = answers.length < 3;
+    const handleDeleteAnswer = (index) => {
+        dispatch(showWarningRequest({
+            title: 'Delete Answer?',
+            text: 'Do you really want to delete this answer?',
+            continue: {
+                text: 'delete',
+                onClick: () => {
+                    setAnswers([...answers.slice(0, index), ...answers.slice(index + 1)])
+                    setCorrect([...correct.slice(0, index), ...correct.slice(index + 1)])
+                }
+            }
+        }))
+
+    }
+
+    const values = { question, answers, correct, edited: edit.edited, disableDelete, showAddButton: showAddAnswer };
+    const handlers = { question: handleQuestion, answer: handleAnswer, correct: handleCheckboxes, save: handleSave, undo: handleUndo, addAnswer: handleAddAnswer, deleteAnswer: handleDeleteAnswer }
 
     return (<ViewComponent
         values={values}

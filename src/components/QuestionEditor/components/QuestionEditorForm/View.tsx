@@ -1,6 +1,8 @@
 import React from 'react';
+import { decode } from 'he';
 import { useStyles } from './useStyles';
-import { Paper, FormLabel, Grid, Checkbox, Button, FormGroup, TextField } from "@material-ui/core";
+import { Paper, FormLabel, Grid, Checkbox, Button, FormGroup, TextField, IconButton } from "@material-ui/core";
+import { Delete, Add } from '@material-ui/icons';
 
 export const View = ({ values, handlers }) => {
 
@@ -8,7 +10,7 @@ export const View = ({ values, handlers }) => {
 
     return (
         <Paper className={classes.paper}>
-            <FormGroup>
+            <FormGroup className={classes.form}>
                 <FormLabel className={classes.formLabel}>
                     Question
                 </FormLabel>
@@ -18,7 +20,7 @@ export const View = ({ values, handlers }) => {
                     multiline
                     name='question'
                     type='text'
-                    value={values.question}
+                    value={decode(values.question)}
                     onChange={handlers.question}
                 />
                 <Grid container>
@@ -31,7 +33,10 @@ export const View = ({ values, handlers }) => {
                 </Grid>
                 {values.answers.map((a, i) => {
                     return <Grid container key={'answer_wrapper_' + i}>
-                        <Grid item xs={10} key={'answer_' + i}>
+                        <Grid item xs={1} >
+                            <IconButton disabled={values.disableDelete} onClick={() => handlers.deleteAnswer(i)} > <Delete /> </IconButton>
+                        </Grid>
+                        <Grid item xs={9} key={'answer_' + i}>
                             <TextField
                                 key={'answer_field_' + i}
                                 className={classes.questionField}
@@ -54,8 +59,11 @@ export const View = ({ values, handlers }) => {
                         </Grid>
                     </Grid>
                 })}
+                {values.showAddButton && <Grid container style={{ marginTop: '10px' }}>
+                    <IconButton onClick={handlers.addAnswer} > <Add /> </IconButton>
+                </Grid>}
 
-                <Grid container spacing={1}>
+                <Grid container spacing={1} style={{ marginTop: '10px' }}>
                     <Grid item xs={2}>
                         <Button
                             variant="contained"
@@ -67,7 +75,7 @@ export const View = ({ values, handlers }) => {
                             Undo
                     </Button>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={2} >
                         <Button
                             component={Button}
                             variant="contained"
@@ -77,7 +85,7 @@ export const View = ({ values, handlers }) => {
                             onClick={handlers.save}
                         >
                             Save
-        </Button>
+                        </Button>
                     </Grid>
                     <Grid item xs={8}></Grid>
                 </Grid>
