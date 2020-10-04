@@ -3,8 +3,7 @@ import * as warningService from '../../actions/warningservice';
 
 interface WarningButtonState {
     onClick: null | Function,
-    text: string | null,
-    disable: boolean | null,
+    text: string | null
 }
 
 export interface WarningState {
@@ -22,12 +21,10 @@ const initialState: WarningState = {
     continue: {
         onClick: null,
         text: null,
-        disable: false
     },
     cancel: {
         onClick: () => { },
-        text: null,
-        disable: false
+        text: null
     },
 };
 
