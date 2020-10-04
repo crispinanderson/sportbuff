@@ -20,9 +20,15 @@ const WarningDialog = ({ dispatch, warning }) => {
             <Dialog open={warning.open} >
                 <DialogTitle>{warning.title || ''}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        {warning.text}
-                    </DialogContentText>
+                    {warning.text &&
+                        <>
+                            {warning.text.split('\n').map((entry, i) => {
+                                return <DialogContentText key={'dialog_content_text_' + i} >
+                                    {entry}
+                                </DialogContentText>
+                            })}
+                        </>}
+
                     {warning.content}
                 </DialogContent>
                 <DialogActions>
