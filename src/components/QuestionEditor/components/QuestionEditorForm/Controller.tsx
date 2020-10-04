@@ -56,14 +56,26 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
         }
     }, [edit.index])
 
-    const inputsAreValid = () => {
-        if (answers.filter((a) => a.length).length < answers.length) return false;
-        if (question.split(' ').length < 2) return false
-        return true;
+    const validationWarnings = () => {
+        const warnings: string[] = [];
+        if (answers.filter((a) => a.length).length < answers.length) warnings.push('Your answers cannot be empty.');
+        if (question.split(' ').length < 2) warnings.push('Your question must contain at least 2 words');
+        if (question.slice(-1) !== '?') warnings.push('Your question must end with a question mark');
+        return warnings;
     }
 
     const handleSave = () => {
-        if (inputsAreValid()) {
+        const warnings = validationWarnings();
+        if (warnings.length) {
+            dispatch(showWarningRequest({
+                title: 'There are issues with your edit.',
+                text: warnings.join('\n'),
+                cancel: {
+                    text: 'close'
+                }
+            }))
+        }
+        else {
             dispatch(showWarningRequest({
                 title: 'Save your changes?',
                 text: 'Overwrite and save the changes, this cannot be undone!',
@@ -77,15 +89,6 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
                             incorrect_answers: answers.filter((a, i) => !correct[i])
                         }))
                     }
-                }
-            }))
-        }
-        else {
-            dispatch(showWarningRequest({
-                title: 'There are issues with your edit.',
-                text: 'Please check your question and answers, you cannot have empty answers and your question must be at least 2 words long.',
-                cancel: {
-                    text: 'close'
                 }
             }))
         }
