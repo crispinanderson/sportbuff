@@ -1,9 +1,9 @@
-import { Box, Button } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { decode } from 'he';
+import { Box, Button, Grid, Paper } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
 import { deleteQuestionRequest, getQuestionsRequest, editQuestionRequest } from '../../redux/actions/questionwebservice';
 import { showWarningRequest } from '../../redux/actions/warningservice';
 
@@ -68,12 +68,12 @@ function QuestionListView({ dispatch, questions }) {
         onClick: () => dispatch(deleteQuestionRequest(index))
       }
     }))
-
   }
 
   const editQuestion = (index) => {
     dispatch(editQuestionRequest(index))
   }
+
 
   return (
     <Grid item xs={5}>
@@ -86,9 +86,9 @@ function QuestionListView({ dispatch, questions }) {
           <Grid item xs={12} key={index}>
             <Paper className={classes.paper}>
               <Box className={classes.questionDetails}>
-                <Box>{question.question}</Box>
-                <Box>{question.category}</Box>
-                <Box>{question.difficulty}</Box>
+                <Box>{decode(question.question)}</Box>
+                <Box>{decode(question.category)}</Box>
+                <Box>{decode(question.difficulty)}</Box>
               </Box>
               <Box className={classes.buttons}>
                 <Button variant="contained" color="primary" onClick={() => editQuestion(index)}>
