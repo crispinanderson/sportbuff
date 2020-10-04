@@ -1,7 +1,7 @@
 
-import * as sportwebservice from '../actions/questionwebservice';
+import * as sportwebservice from '../../actions/questionwebservice';
 
-import { Question, EditQuestion } from '../../types/Question';
+import { Question, EditQuestion } from '../../../types/Question';
 
 export interface QuizState {
     questions: Question[]

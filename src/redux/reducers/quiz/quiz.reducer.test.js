@@ -1,5 +1,5 @@
 import { questionReduxReducer as reducer } from './quiz.reducer'
-import { Types } from '../actions/questionwebservice';
+import { Types } from '../../actions/questionwebservice';
 import { mockStateWithEdit, mockApiResponse, mockStateNullEdit } from './quiz.reducer.mocks';
 
 

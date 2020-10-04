@@ -1,5 +1,5 @@
 
-import * as warningService from '../actions/warningservice';
+import * as warningService from '../../actions/warningservice';
 
 interface WarningButtonState {
     onClick: null | Function,
