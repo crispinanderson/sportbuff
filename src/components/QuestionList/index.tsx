@@ -1,10 +1,11 @@
-import { Box, Button } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { deleteQuestionRequest, getQuestionsRequest } from '../../redux/actions/questionwebservice';
+import { decode } from 'he';
+import { Box, Button, Grid, Paper } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+import { deleteQuestionRequest, getQuestionsRequest, editQuestionRequest } from '../../redux/actions/questionwebservice';
+import { showWarningRequest } from '../../redux/actions/warningservice';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: theme.palette.text.secondary,
       display: 'flex',
-      
+
       justifyContent: 'space-evenly',
     },
     questionDetails: {
@@ -46,27 +47,36 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-function QuestionListView({dispatch, questions}) {
+function QuestionListView({ dispatch, questions }) {
 
   const classes = useStyles();
 
   useEffect(() => {
+    dispatch(getQuestionsRequest());
   }, []);
 
   const getMoreQuestions = () => {
     dispatch(getQuestionsRequest());
   }
 
-  const deleteQuestion =  (index) => {
-      dispatch(deleteQuestionRequest(index));
+  const deleteQuestion = (index) => {
+    dispatch(showWarningRequest({
+      title: 'Delete question?',
+      text: 'Are you sure, this cannot be undone!',
+      continue: {
+        text: 'delete',
+        onClick: () => dispatch(deleteQuestionRequest(index))
+      }
+    }))
   }
 
   const editQuestion = (index) => {
-   // TODO
+    dispatch(editQuestionRequest(index))
   }
 
+
   return (
-    <Grid xs={5}>
+    <Grid item xs={5}>
       <h1>Questions</h1>
       <Button variant="contained" color="primary" onClick={() => getMoreQuestions()}>
         Fetch More Questions
@@ -76,16 +86,16 @@ function QuestionListView({dispatch, questions}) {
           <Grid item xs={12} key={index}>
             <Paper className={classes.paper}>
               <Box className={classes.questionDetails}>
-                <Box>{question.question}</Box>
-                <Box>{question.category}</Box>
-                <Box>{question.difficulty}</Box>
+                <Box>{decode(question.question)}</Box>
+                <Box>{decode(question.category)}</Box>
+                <Box>{decode(question.difficulty)}</Box>
               </Box>
               <Box className={classes.buttons}>
-              <Button variant="contained" color="primary" onClick={() => editQuestion(index)}>
-                Edit
+                <Button variant="contained" color="primary" data-testid='question-list-edit-button' onClick={() => editQuestion(index)}>
+                  Edit
               </Button>
-              <Button variant="contained" color="primary" onClick={() => deleteQuestion(index)}>
-Delete      </Button>
+                <Button variant="contained" color="primary" onClick={() => deleteQuestion(index)}>
+                  Delete      </Button>
               </Box>
             </Paper>
           </Grid>
