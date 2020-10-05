@@ -91,7 +91,7 @@ function QuestionListView({ dispatch, questions }) {
                 <Box>{decode(question.difficulty)}</Box>
               </Box>
               <Box className={classes.buttons}>
-                <Button variant="contained" color="primary" onClick={() => editQuestion(index)}>
+                <Button variant="contained" color="primary" data-testid='question-list-edit-button' onClick={() => editQuestion(index)}>
                   Edit
               </Button>
                 <Button variant="contained" color="primary" onClick={() => deleteQuestion(index)}>

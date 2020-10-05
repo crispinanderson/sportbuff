@@ -17,13 +17,13 @@ const WarningDialog = ({ dispatch, warning }) => {
 
     return (
         <>
-            <Dialog open={warning.open} >
-                <DialogTitle>{warning.title || ''}</DialogTitle>
-                <DialogContent>
+            <Dialog open={warning.open} data-testid={'warning-wrapper'}>
+                <DialogTitle data-testid={'warning-title'}>{warning.title || ''}</DialogTitle>
+                <DialogContent data-testid={'warning-content'}>
                     {warning.text &&
                         <>
                             {warning.text.split('\n').map((entry, i) => {
-                                return <DialogContentText key={'dialog_content_text_' + i} >
+                                return <DialogContentText key={'dialog_content_text_' + i} data-testid={'warning-text'}>
                                     {entry}
                                 </DialogContentText>
                             })}
@@ -32,8 +32,8 @@ const WarningDialog = ({ dispatch, warning }) => {
                     {warning.content}
                 </DialogContent>
                 <DialogActions>
-                    <Button disabled={warning.cancel.disable} onClick={handleCancel} > {warning.cancel.text || 'Cancel'}</Button>
-                    {warning.continue.onClick && <Button disabled={warning.continue.disable} onClick={handleContinue} > {warning.continue.text || 'Continue'}</Button>}
+                    <Button disabled={warning.cancel.disable} onClick={handleCancel} data-testid={'warning-cancel-button'}> {warning.cancel.text || 'Cancel'}</Button>
+                    {warning.continue.onClick && <Button disabled={warning.continue.disable} onClick={handleContinue} data-testid={'warning-continue-button'}> {warning.continue.text || 'Continue'}</Button>}
                 </DialogActions>
             </Dialog>
         </>
