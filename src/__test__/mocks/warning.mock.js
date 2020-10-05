@@ -1,5 +1,5 @@
 
-export const warningMockRequestData = {
+export const mockWarning = {
     title: 'Warning title',
     text: 'warning text',
     continue: {

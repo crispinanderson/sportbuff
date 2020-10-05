@@ -1,4 +1,4 @@
-import { Types, showWarningRequest, continueWarningRequest, cancelWarningRequest } from '.'
+import { Types, showWarningRequest, continueWarningRequest, cancelWarningRequest } from '../../../redux/actions/warningservice'
 const data = { title: 'warning title' }
 
 describe('warningService- ', () => {

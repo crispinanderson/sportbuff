@@ -1,6 +1,6 @@
-import { warningReduxReducer as reducer } from './warning.reducer';
-import { Types } from '../../actions/warningservice';
-import { warningMockRequestData, initialState } from './warning.mocks';
+import { warningReduxReducer as reducer } from '../../../redux/reducers/warning/warning.reducer';
+import { Types } from '../../../redux/actions/warningservice';
+import { mockWarning, initialState } from '../../mocks/warning.mock';
 
 
 describe('warning reducer - ', () => {
@@ -12,20 +12,20 @@ describe('warning reducer - ', () => {
     test('should handle SHOW_WARNING_REQUEST: ', () => {
         expect(JSON.stringify(reducer(undefined, {
             type: Types.SHOW_WARNING_REQUEST,
-            payload: warningMockRequestData
+            payload: mockWarning
         })
-        )).toBe(JSON.stringify({ ...initialState, ...warningMockRequestData, open: true }))
+        )).toBe(JSON.stringify({ ...initialState, ...mockWarning, open: true }))
     })
 
     test('should handle CANCEL_WARNING_REQUEST: ', () => {
-        expect(JSON.stringify(reducer({ ...initialState, ...warningMockRequestData, open: true }, {
+        expect(JSON.stringify(reducer({ ...initialState, ...mockWarning, open: true }, {
             type: Types.CANCEL_WARNING_REQUEST
         })
         )).toBe(JSON.stringify(initialState))
     })
 
     test('should handle CONTINUE_WARNING_REQUEST: ', () => {
-        expect(JSON.stringify(reducer({ ...initialState, ...warningMockRequestData, open: true }, {
+        expect(JSON.stringify(reducer({ ...initialState, ...mockWarning, open: true }, {
             type: Types.CONTINUE_WARNING_REQUEST
         })
         )).toBe(JSON.stringify(initialState))
