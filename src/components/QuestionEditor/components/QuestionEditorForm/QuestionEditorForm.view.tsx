@@ -9,12 +9,13 @@ export const View = ({ values, handlers }) => {
     const classes = useStyles();
 
     return (
-        <Paper className={classes.paper}>
+        <Paper data-testid={'editor-wrapper'} className={classes.paper}>
             <FormGroup className={classes.form}>
-                <FormLabel className={classes.formLabel}>
+                <FormLabel data-testid={'editor-question-label'} className={classes.formLabel}>
                     Question
                 </FormLabel>
                 <TextField
+                    data-testid={'editor-question-input'}
                     className={classes.questionField}
                     variant='outlined'
                     multiline
@@ -25,7 +26,7 @@ export const View = ({ values, handlers }) => {
                 />
                 <Grid container>
                     <Grid item xs={10}>
-                        <FormLabel className={classes.formLabel}> Answers </FormLabel>
+                        <FormLabel data-testid={'editor-answers-label'} className={classes.formLabel}> Answers </FormLabel>
                     </Grid>
                     <Grid item xs={2}>
                         <FormLabel className={classes.formLabel}> isCorrect </FormLabel>
@@ -34,10 +35,11 @@ export const View = ({ values, handlers }) => {
                 {values.answers.map((a, i) => {
                     return <Grid container key={'answer_wrapper_' + i}>
                         <Grid item xs={1} >
-                            <IconButton disabled={values.disableDelete} onClick={() => handlers.deleteAnswer(i)} > <Delete /> </IconButton>
+                            <IconButton data-testid={'editor-answers-delete-button'} disabled={values.disableDelete} onClick={() => handlers.deleteAnswer(i)} > <Delete /> </IconButton>
                         </Grid>
                         <Grid item xs={9} key={'answer_' + i}>
                             <TextField
+                                data-testid={'editor-answer-input'}
                                 key={'answer_field_' + i}
                                 className={classes.questionField}
                                 variant='outlined'
@@ -50,6 +52,7 @@ export const View = ({ values, handlers }) => {
                         </Grid>
                         <Grid item xs={2} key={'answer_is_correct_' + i}>
                             <Checkbox
+                                data-testid={'editor-correct-checkbox'}
                                 key={'answer_is_correct_checkbox_' + i}
                                 className={classes.questionField}
                                 checked={values.correct[i]}
@@ -60,12 +63,13 @@ export const View = ({ values, handlers }) => {
                     </Grid>
                 })}
                 {values.showAddButton && <Grid container style={{ marginTop: '10px' }}>
-                    <IconButton onClick={handlers.addAnswer} > <Add /> </IconButton>
+                    <IconButton data-testid={'editor-answers-add-button'} onClick={handlers.addAnswer} > <Add /> </IconButton>
                 </Grid>}
 
                 <Grid container spacing={1} style={{ marginTop: '10px' }}>
                     <Grid item xs={2}>
                         <Button
+                            data-testid={'editor-undo-button'}
                             variant="contained"
                             color="primary"
                             className={classes.buttons}
@@ -77,6 +81,7 @@ export const View = ({ values, handlers }) => {
                     </Grid>
                     <Grid item xs={2} >
                         <Button
+                            data-testid={'editor-save-button'}
                             component={Button}
                             variant="contained"
                             color="primary"

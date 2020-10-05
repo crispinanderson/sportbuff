@@ -13,7 +13,7 @@ function App(props) {
 
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className="App" data-testid={'app-wrapper'}>
         <Grid container spacing={1}>
           <QuestionEditor />
           <QuestionsList />

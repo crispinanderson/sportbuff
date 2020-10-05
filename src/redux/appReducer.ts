@@ -6,7 +6,7 @@ import { questionReduxReducer } from './reducers/quiz/quiz.reducer';
 import { warningReduxReducer } from './reducers/warning/warning.reducer';
 
 
-const overallReducer = combineReducers({
+export const overallReducer = combineReducers({
   quiz: questionReduxReducer,
   warning: warningReduxReducer
 });
