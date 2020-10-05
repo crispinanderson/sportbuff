@@ -3,7 +3,7 @@ import { render, fireEvent, screen } from '../../../../../test-utils'
 import QuestionEditorForm from '../QuestionEditorForm'
 import { mockStateWithEdit } from '../../../../../redux/reducers/quiz/quiz.reducer.mocks';
 
-// --> DISPATCHES & VALIDATION TESTED IN INTEGRATION TESTS AS TIED TO WARNINGS DIALOG <--
+// --> DISPATCHES & VALIDATION NEED TO BE IN INTEGRATION TESTS AS TIED TO WARNINGS DIALOG <--
 
 describe('QuestionEditorForm - ', () => {
 
