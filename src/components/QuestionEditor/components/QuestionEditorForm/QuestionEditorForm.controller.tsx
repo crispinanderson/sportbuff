@@ -44,8 +44,8 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
     useEffect(() => {
         if (edit.edited) {
             dispatch(showWarningRequest({
-                title: 'You have unsaved changes?',
-                text: 'Do you want to load this booking, you will loose your changes',
+                title: 'Edit Booking?',
+                text: 'You have unsaved changes, if you load this booking you will loose your changes',
                 continue: {
                     onClick: resetEditor
                 }
@@ -58,6 +58,7 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
     const validationWarnings = () => {
         const warnings: string[] = [];
+        if (!correct.filter((v) => v).length) warnings.push('You must have one correct answer.');
         if (answers.filter((a) => a.length).length < answers.length) warnings.push('Your answers cannot be empty.');
         if (question.split(' ').length < 2) warnings.push('Your question must contain at least 2 words');
         if (question.slice(-1) !== '?') warnings.push('Your question must end with a question mark');
