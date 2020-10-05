@@ -6,7 +6,7 @@ import { warningInitialState } from '../mocks/warning.mock';
 
 describe('QuestionEditorForm.integration - ', () => {
 
-    const { withEdit } = mockQuizState;
+    const { withEdit, withoutEdit } = mockQuizState;
 
     test('When new state is passed - warning "Edit Booking?"', () => {
         render(<Layout />, { initialState: { quiz: withEdit, warning: warningInitialState } });
@@ -22,6 +22,61 @@ describe('QuestionEditorForm.integration - ', () => {
         //Question data is loaded into editor-question --> is material-ui TextField textArea
         const question = screen.getByTestId('editor-question-input').childNodes[0].childNodes[0].textContent;
         expect(question).toBe('Which of these teams is a member of the NHL era?');
+    })
+
+    describe('Save and undo button are clickable - ', () => {
+        beforeEach(() => {
+            render(<Layout />, { initialState: { quiz: withoutEdit, warning: warningInitialState } });
+            //Select a question
+            fireEvent.click(screen.getAllByTestId('question-list-edit-button')[0]);
+        })
+
+        test('but not initially!!', () => {
+            //Save button is disabled
+            const classlist = Array.from(screen.getByTestId('editor-save-button').classList);
+            expect(classlist.includes('Mui-disabled')).toBe(true)
+        })
+
+        test('when the question is edited', () => {
+            //Edit the question
+            fireEvent.input(screen.getByTestId('editor-question-input').childNodes[0].childNodes[0], { target: { value: 'Edited my question?' } });
+
+            //Save button is not disabled
+            const classlist = Array.from(screen.getByTestId('editor-save-button').classList);
+            expect(classlist.includes('Mui-disabled')).toBe(false)
+        })
+
+        test('when an answer is edited', () => {
+            //Edit the question
+            fireEvent.input(screen.getAllByTestId('editor-answer-input')[0].childNodes[0].childNodes[0], { target: { value: 'Edited my answer!' } });
+
+            //Save button is not disabled
+            const classlist = Array.from(screen.getByTestId('editor-save-button').classList);
+            expect(classlist.includes('Mui-disabled')).toBe(false)
+        })
+
+        test('when the correct answer is changed', () => {
+            //change the correct answer
+            const correctBtn = screen.getAllByTestId('editor-correct-checkbox')[1].childNodes[0].childNodes[0]
+            fireEvent.click(correctBtn);
+
+            //Save button is not disabled
+            const classlist = Array.from(screen.getByTestId('editor-save-button').classList);
+            expect(classlist.includes('Mui-disabled')).toBe(false)
+        })
+
+        test('when an answer is deleted', () => {
+            //Delete an aswer
+            const deleteBtn = screen.getAllByTestId('editor-answers-delete-button')[0];
+            fireEvent.click(deleteBtn);
+
+            //Confirm the delete
+            fireEvent.click(screen.getByTestId('warning-continue-button'))
+
+            //Save button is not disabled
+            const classlist = Array.from(screen.getByTestId('editor-save-button').classList);
+            expect(classlist.includes('Mui-disabled')).toBe(false)
+        })
     })
 
     describe('When delete answer is pressed - ', () => {

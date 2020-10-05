@@ -119,12 +119,14 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
     const disableDelete = answers.length < 3;
     const handleDeleteAnswer = (index) => {
+        
         return dispatch(showWarningRequest({
             title: 'Delete Answer?',
             text: 'Do you really want to delete this answer?',
             continue: {
                 text: 'delete',
                 onClick: () => {
+                    if (!edit.edited) { dispatch(setQuestionEditedRequest()) }
                     setAnswers([...answers.slice(0, index), ...answers.slice(index + 1)])
                     setCorrect([...correct.slice(0, index), ...correct.slice(index + 1)])
                 }
