@@ -112,7 +112,7 @@ describe('QuestionEditorForm - ', () => {
             }
         })
 
-        expect(screen.queryByTestId('editor-answers-add-button')).toBe(null);
+        expect(screen.queryByTestId('editor-answers-add-button')).toBeNull();
     })
 
     test('answers delete buttons are disabled when answers.length = 2', () => {
