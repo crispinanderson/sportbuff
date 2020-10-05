@@ -67,8 +67,8 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
     const handleSave = () => {
         const warnings = validationWarnings();
         if (warnings.length) {
-            dispatch(showWarningRequest({
-                title: 'There are issues with your edit.',
+            return dispatch(showWarningRequest({
+                title: 'There are problems with your edit.',
                 text: warnings.join('\n'),
                 cancel: {
                     text: 'close'
@@ -76,7 +76,7 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
             }))
         }
         else {
-            dispatch(showWarningRequest({
+            return dispatch(showWarningRequest({
                 title: 'Save your changes?',
                 text: 'Overwrite and save the changes, this cannot be undone!',
                 continue: {
@@ -96,7 +96,7 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
     };
 
     const handleUndo = () => {
-        dispatch(showWarningRequest({
+        return dispatch(showWarningRequest({
             title: 'Undo changes?',
             text: 'Do you really want to undo all the changes!',
             continue: {
@@ -118,7 +118,7 @@ export const Controller = ({ ViewComponent, edit, dispatch }) => {
 
     const disableDelete = answers.length < 3;
     const handleDeleteAnswer = (index) => {
-        dispatch(showWarningRequest({
+        return dispatch(showWarningRequest({
             title: 'Delete Answer?',
             text: 'Do you really want to delete this answer?',
             continue: {
