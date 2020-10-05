@@ -8,7 +8,7 @@ export const mockWarning = {
     }
 }
 
-export const initialState = {
+export const warningInitialState = {
     open: false,
     title: null,
     text: null,
