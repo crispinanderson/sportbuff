@@ -1,5 +1,5 @@
 
-export const warningMockRequestData = {
+export const mockWarning = {
     title: 'Warning title',
     text: 'warning text',
     continue: {
@@ -8,7 +8,7 @@ export const warningMockRequestData = {
     }
 }
 
-export const initialState = {
+export const warningInitialState = {
     open: false,
     title: null,
     text: null,

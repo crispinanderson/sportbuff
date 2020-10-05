@@ -1,6 +1,7 @@
-import { questionReduxReducer as reducer } from './quiz.reducer'
-import { Types } from '../../actions/questionwebservice';
-import { mockStateWithEdit, mockApiResponse, mockStateNullEdit } from './quiz.reducer.mocks';
+import { questionReduxReducer as reducer } from '../../../redux/reducers/quiz/quiz.reducer'
+import { Types } from '../../../redux/actions/questionwebservice';
+import { mockQuizState } from '../../mocks/quiz.mock';
+import { mockApiResponse } from '../../mocks/api.mock'
 
 
 describe('quiz reducer - ', () => {
@@ -36,13 +37,13 @@ describe('quiz reducer - ', () => {
 
         test('when state is pre-filled, with edit', () => {
             expect(
-                reducer(mockStateWithEdit, {
+                reducer(mockQuizState.withEdit, {
                     type: Types.GET_QUESTIONS_SUCCESS,
                     payload: mockApiResponse
                 })
             ).toMatchObject(
                 {
-                    ...mockStateWithEdit,
+                    ...mockQuizState.withEdit,
                     questions: [
                         {
                             category: "Sports",
@@ -52,7 +53,7 @@ describe('quiz reducer - ', () => {
                             question: "Which of these teams is a member of the NHL era?",
                             type: "multiple",
                         },
-                        ...mockStateWithEdit.questions,
+                        ...mockQuizState.withEdit.questions,
                     ]
                 }
             )
@@ -60,13 +61,13 @@ describe('quiz reducer - ', () => {
 
         test('when state is pre-filled, null edit', () => {
             expect(
-                reducer(mockStateNullEdit, {
+                reducer(mockQuizState.withoutEdit, {
                     type: Types.GET_QUESTIONS_SUCCESS,
                     payload: mockApiResponse
                 })
             ).toMatchObject(
                 {
-                    ...mockStateNullEdit,
+                    ...mockQuizState.withoutEdit,
                     questions: [
                         {
                             category: "Sports",
@@ -76,7 +77,7 @@ describe('quiz reducer - ', () => {
                             question: "Which of these teams is a member of the NHL era?",
                             type: "multiple",
                         },
-                        ...mockStateNullEdit.questions,
+                        ...mockQuizState.withoutEdit.questions,
                     ]
                 }
             )
@@ -88,13 +89,13 @@ describe('quiz reducer - ', () => {
     describe('should handle DELETE_QUESTION_REQUEST: ', () => {
         test('when state is pre-filled, delete item at index 0', () => {
             expect(
-                reducer(mockStateWithEdit, {
+                reducer(mockQuizState.withEdit, {
                     type: Types.DELETE_QUESTION_REQUEST,
                     payload: { index: 0 }
                 })
             ).toMatchObject(
                 {
-                    ...mockStateWithEdit,
+                    ...mockQuizState.withEdit,
                     questions: [
                         {
                             category: "Random",
@@ -110,13 +111,13 @@ describe('quiz reducer - ', () => {
         })
         test('when state is pre-filled, delete item at index 1', () => {
             expect(
-                reducer(mockStateWithEdit, {
+                reducer(mockQuizState.withEdit, {
                     type: Types.DELETE_QUESTION_REQUEST,
                     payload: { index: 1 }
                 })
             ).toMatchObject(
                 {
-                    ...mockStateWithEdit,
+                    ...mockQuizState.withEdit,
                     questions: [
                         {
                             category: "Sports",
@@ -135,13 +136,13 @@ describe('quiz reducer - ', () => {
     describe('should handle EDIT_QUESTION_REQUEST: ', () => {
         test('when state has null edit, edit item at index 0', () => {
             expect(
-                reducer(mockStateNullEdit, {
+                reducer(mockQuizState.withoutEdit, {
                     type: Types.EDIT_QUESTION_REQUEST,
                     payload: { index: 0 }
                 })
             ).toMatchObject(
                 {
-                    ...mockStateNullEdit,
+                    ...mockQuizState.withoutEdit,
                     edit: {
                         category: "Sports",
                         correct_answer: "Philadelphia Flyers",
@@ -157,13 +158,13 @@ describe('quiz reducer - ', () => {
         })
         test('when state is pre-filled, edit item at index 1', () => {
             expect(
-                reducer(mockStateWithEdit, {
+                reducer(mockQuizState.withEdit, {
                     type: Types.EDIT_QUESTION_REQUEST,
                     payload: { index: 1 }
                 })
             ).toMatchObject(
                 {
-                    ...mockStateWithEdit,
+                    ...mockQuizState.withEdit,
                     edit: {
                         index: 1,
                         edited: false,
@@ -180,11 +181,11 @@ describe('quiz reducer - ', () => {
     })
 
     describe('should handle SAVE_QUESTION_REQUEST: ', () => {
-        test('when state is mockStateWithEdit', () => {
+        test('when state is mockQuizState.withEdit', () => {
             expect(
-                reducer(mockStateWithEdit, {
+                reducer(mockQuizState.withEdit, {
                     type: Types.SAVE_QUESTION_REQUEST,
-                    payload: { index: 0, data: { ...mockStateWithEdit.edit } }
+                    payload: { index: 0, data: { ...mockQuizState.withEdit.edit } }
                 })
             ).toMatchObject(
                 {
@@ -224,9 +225,9 @@ describe('quiz reducer - ', () => {
     describe('should handle SET_QUESTION_EDITED_REQUEST', () => {
         expect(
             reducer({
-                ...mockStateWithEdit,
+                ...mockQuizState.withEdit,
                 edit: {
-                    ...mockStateWithEdit.edit,
+                    ...mockQuizState.withEdit.edit,
                     edited: false
                 }
             }, {
@@ -234,9 +235,9 @@ describe('quiz reducer - ', () => {
                 })
         ).toMatchObject(
             {
-                ...mockStateWithEdit,
+                ...mockQuizState.withEdit,
                 edit: {
-                    ...mockStateWithEdit.edit,
+                    ...mockQuizState.withEdit.edit,
                     edited: true
                 }
             }

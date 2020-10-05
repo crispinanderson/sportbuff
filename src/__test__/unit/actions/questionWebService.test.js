@@ -1,4 +1,4 @@
-import { Types, getQuestionsRequest, getQuestionsSuccess, getQuestiondFailure, setQuestionEditedRequest, saveQuestionRequest, editQuestionRequest, deleteQuestionRequest } from './index'
+import { Types, getQuestionsRequest, getQuestionsSuccess, getQuestiondFailure, setQuestionEditedRequest, saveQuestionRequest, editQuestionRequest, deleteQuestionRequest } from '../../../redux/actions/questionwebservice'
 
 describe('questionWebService- ', () => {
     describe('getQuestionsRequest: ', () => {
